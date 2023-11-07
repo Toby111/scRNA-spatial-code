@@ -374,7 +374,46 @@ ggsave2("Merge_IRD3_Otud5-Gpx4.pdf",width = 15,height=5)
 
 
 
+#######addmodulescore##############################################
+autophagy=c("Atg14","Atg5","Becn1","Atg4d","Atg2b","Atg2a","Atg12","Atg16l1","Tsc1","Tsc2","Ambra1")
+autophagy=list(autophagy)
 
+Sham <-AddModuleScore(Sham,features = autophagy,name = "autophagy")
+AKI <-AddModuleScore(AKI,features = autophagy,name = "autophagy")
+
+mtor=c("Pik3r1","Pdpk1","Mtor","Tsc1","Tsc2","Rps6kb1","Slc39a7","Pten","Mknk1")
+mtor=list(mtor)
+
+Sham <-AddModuleScore(Sham,features = mtor,name = "mtor")
+AKI <-AddModuleScore(AKI,features = mtor,name = "mtor")
+
+ferroptosis=c("Acsl4","Nox4","Keap1","Slc7a11","Slc39a7","Aifm2","Tmem164")
+ferroptosis=list(ferroptosis)
+
+Sham <-AddModuleScore(Sham,features = ferroptosis,name = "ferroptosis")
+AKI <-AddModuleScore(AKI,features = ferroptosis,name = "ferroptosis")
+
+metadata <-Sham@meta.data
+colnames(metadata)
+p1 <- ggviolin(data = metadata,
+               x="seurat_clusters",
+               y="ferroptosis",
+               fill = "seurat_clusters")
+p2 <- SpatialFeaturePlot(Sham, features ="ferroptosis")
+p1 + p2
+ggsave("Sham_SpatialFeaturePlot_ferroptosis.pdf",width = 8,height = 5)
+
+metadata <-AKI@meta.data
+colnames(metadata)
+p1 <- ggviolin(data = metadata,
+               x="seurat_clusters",
+               y="ferroptosis",
+               fill = "seurat_clusters")
+p2 <- SpatialFeaturePlot(AKI, features ="ferroptosis")
+p1 + p2
+ggsave("AKI_SpatialFeaturePlot_ferroptosis.pdf",width = 8,height = 5)
+
+################################################
 
 
 
